@@ -4,7 +4,6 @@ import {NewItemForm} from "./NewItemForm";
 
 interface AddNewItemProps {
     onAdd(text: string): void
-
     toggleButtonText: string
     dark?: boolean
 }
