@@ -1,6 +1,8 @@
 import React, {createContext, useContext, useReducer} from "react"
 import {findItemIndexById} from "./utils/findItemIndexById";
 import {v4 as uuidv4} from 'uuid';
+import { moveItem } from "./utils/moveItem";
+import { DragItem } from "./DragItem";
 
 interface Task {
     id: string
@@ -15,6 +17,7 @@ interface List {
 
 interface AppState {
     lists: List[]
+    draggedItem: DragItem | undefined
 }
 
 interface AppStateContextProps {
@@ -29,13 +32,27 @@ interface AppStateContextProps {
 
 type Action =
     | {
-    type: "ADD_LIST"
-    payload: string
+        type: "ADD_LIST"
+        payload: string
 }
     | {
-    type: "ADD_TASK"
-    payload: { text: string; taskId: string }
-}
+        type: "ADD_TASK"
+        payload: {
+            text: string
+            taskId: string
+        }
+    }
+    | {
+        type: "MOVE_LIST"
+        payload: {
+            dragIndex: number
+            hoverIndex: number
+        }
+    }
+    | {
+        type: "SET_DRAGGED_ITEM"
+        payload: DragItem | undefined
+    }
 
 //React wants us to provide the default value for our context. This value will only
 //be used if we don't wrap our application into our AppStateProvider. So we can
@@ -62,9 +79,10 @@ const appData: AppState = {
             text: "Done",
             tasks: [{id: "c3", text: "Begin to use static typing"}]
         }
-    ]
+    ],
+    draggedItem: undefined
 }
-
+//
 const appStateReducer = (state: AppState, action: Action): AppState => {
     switch (action.type) {
         case "ADD_LIST": {
@@ -90,13 +108,21 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
                 ...state
             }
         }
+        case "MOVE_LIST": {
+            const { dragIndex, hoverIndex } = action.payload
+            state.lists = moveItem(state.lists, dragIndex, hoverIndex)
+            return { ...state }
+        }
+        case "SET_DRAGGED_ITEM": {
+            return { ...state, draggedItem: action.payload }
+        }
         default: {
             return state
         }
     }
 }
 
-//We use React.propsWithChildren type. 
+//We use React.propsWithChildren type.
 //It requires one generic argument, but we don't want to have any other props
 //so we pass an empty object to it.
 
