@@ -1,8 +1,8 @@
-import {useEffect, useRef} from "react"
+import { useLayoutEffect, useRef } from 'react'
 
 export const useFocus = () => {
     const ref = useRef<HTMLInputElement>(null)
-    useEffect(() => {
+    useLayoutEffect(() => {
         ref.current?.focus()
     })
     return ref
