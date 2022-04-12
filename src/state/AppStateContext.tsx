@@ -1,8 +1,9 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useImmerReducer } from 'use-immer'
 import { Action } from './actions';
 import { AppState, appStateReducer, List, Task } from './appStateReducer';
 import { DragItem } from '../DragItem';
+import { save } from '../api';
 
 
 type AppStateContextProps = {
@@ -30,7 +31,7 @@ const appData: AppState = {
       tasks: [ { id: 'c3', text: 'Begin to use static typing' } ],
     },
   ],
-  draggedItem: null
+  draggedItem: null,
 }
 
 //React wants us to provide the default value for our context. This value will only
@@ -52,6 +53,11 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const getTasksByListId = (id: string) => {
     return lists.find( (list) => list.id === id )?.tasks || []
   }
+
+  useEffect( () => {
+    save( state )
+  }, [ state ] )
+
   return (
     <AppStateContext.Provider value={ { draggedItem, lists, getTasksByListId, dispatch } }>
       { children }
