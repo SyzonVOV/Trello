@@ -4,6 +4,7 @@ import { Action } from './actions';
 import { AppState, appStateReducer, List, Task } from './appStateReducer';
 import { DragItem } from '../DragItem';
 import { save } from '../api';
+import { withInitialState } from '../withInitialState';
 
 
 type AppStateContextProps = {
@@ -11,6 +12,11 @@ type AppStateContextProps = {
   draggedItem: DragItem | null
   getTasksByListId(id: string): Array<Task>
   dispatch: React.Dispatch<Action>
+}
+
+type AppStateProviderProps = {
+  children: React.ReactNode
+  initialState: AppState
 }
 
 const appData: AppState = {
@@ -45,9 +51,9 @@ const AppStateContext = createContext<AppStateContextProps>( {} as AppStateConte
 //It requires one generic argument, but we don't want to have any other props
 //so we pass an empty object to it.
 
-export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
+export const AppStateProvider = withInitialState<AppStateProviderProps>(({ children, initialState }) => {
 
-  const [ state, dispatch ] = useImmerReducer( appStateReducer, appData )
+  const [ state, dispatch ] = useImmerReducer( appStateReducer, initialState )
   const { draggedItem, lists } = state
 
   const getTasksByListId = (id: string) => {
@@ -63,7 +69,7 @@ export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
       { children }
     </AppStateContext.Provider>
   )
-}
+})
 
 export const useAppState = () => {
   return useContext( AppStateContext )
