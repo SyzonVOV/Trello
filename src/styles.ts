@@ -128,16 +128,26 @@ const rotate360 = keyframes`
   }
 `;
 
+export const FlexContainer = styled.div`
+  display: flex;
+  
+  width: 100vw;
+  height: 100vh;
+  
+  align-items: center;
+  justify-content: center;
+`
+
 export const Spinner = styled.div`
   animation: ${ rotate360 } 1s linear infinite;
   transform: translateZ(0);
 
-  border-top: 2px solid grey;
-  border-right: 2px solid grey;
-  border-bottom: 2px solid grey;
-  border-left: 4px solid black;
+  border-top: 2px solid hsl(190deg 70% 80%);;
+  border-right: 2px solid hsl(190deg 70% 80%);;
+  border-bottom: 2px solid hsl(190deg 70% 80%);
+  border-left: 4px solid hsl(190deg 60% 40%);
   background: transparent;
-  width: 24px;
-  height: 24px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 `;

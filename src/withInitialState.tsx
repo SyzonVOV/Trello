@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AppState } from './state/appStateReducer'
 import { load } from './api';
-import { Spinner } from './styles';
+import { FlexContainer, Spinner } from './styles';
 
 type InjectedProps = {
   initialState: AppState
@@ -44,7 +44,7 @@ export function withInitialState<TProps>(
     }, [] )
 
     if ( isLoading ) {
-      return <Spinner/>
+      return <FlexContainer><Spinner/></FlexContainer>
     }
 
     if ( error ) {
