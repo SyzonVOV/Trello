@@ -10,6 +10,27 @@ type InjectedProps = {
 type PropsWithoutInjected<TBaseProps> = Omit<TBaseProps,
   keyof InjectedProps>
 
+const appData: AppState = {
+  lists: [
+    {
+      id: '0',
+      text: 'To Do',
+      tasks: [ { id: 'c0', text: 'Generate app scaffold' } ],
+    },
+    {
+      id: '1',
+      text: 'In Progress',
+      tasks: [ { id: 'c2', text: 'Learn Typescript' } ],
+    },
+    {
+      id: '2',
+      text: 'Done',
+      tasks: [ { id: 'c3', text: 'Begin to use static typing' } ],
+    },
+  ],
+  draggedItem: null,
+}
+
 //We removed the injected props, and then added them back. This might look tautological,
 // but it is necessary to let TypeScript know that the wrapped component will accept the
 // InjectedProps. TypeScript is very cautious with generic types and if we wouldn't
@@ -34,9 +55,10 @@ export function withInitialState<TProps>(
           const data = await load()
           setInitialState( data )
         } catch (e) {
-          if ( e instanceof Error ) {
+          setInitialState( appData )
+          /*if ( e instanceof Error ) {
             setError( e )
-          }
+          }*/
         }
         setIsLoading( false )
       }

@@ -19,27 +19,6 @@ type AppStateProviderProps = {
   initialState: AppState
 }
 
-const appData: AppState = {
-  lists: [
-    {
-      id: '0',
-      text: 'To Do',
-      tasks: [ { id: 'c0', text: 'Generate app scaffold' } ],
-    },
-    {
-      id: '1',
-      text: 'In Progress',
-      tasks: [ { id: 'c2', text: 'Learn Typescript' } ],
-    },
-    {
-      id: '2',
-      text: 'Done',
-      tasks: [ { id: 'c3', text: 'Begin to use static typing' } ],
-    },
-  ],
-  draggedItem: null,
-}
-
 //React wants us to provide the default value for our context. This value will only
 //be used if we don't wrap our application into our AppStateProvider. So we can
 //omit it. To do it pass an empty object that we'll cast to AppStateContextProps to
