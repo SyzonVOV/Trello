@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,KACA,qBACA,CACA,iBACA,kBACA,CACA,gBACA,WACA,CACA,KACE,QAEF","file":"main.a2541b8a.chunk.css","sourcesContent":["html {\r\nbox-sizing: border-box;\r\n}\r\n*, *:before, *:after {\r\nbox-sizing: inherit;\r\n}\r\nhtml, body, #root {\r\nheight: 100%\r\n}\r\nbody {\r\n  margin: 0;\r\n\r\n}"]}
