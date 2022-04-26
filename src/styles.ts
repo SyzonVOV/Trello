@@ -1,4 +1,6 @@
 import styled, { keyframes } from 'styled-components'
+import {ReactComponent as Pencil} from './assets/images/pencil.svg';
+import {ReactComponent as Trash} from './assets/images/trash.svg';
 
 interface AddItemButtonProps {
   dark?: boolean
@@ -48,6 +50,8 @@ export const ColumnTitle = styled.div`
 `
 
 export const CardContainer = styled( DragPreviewContainer )`
+  display: flex;
+  justify-content: space-between;
   background-color: #fff;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -150,4 +154,24 @@ export const Spinner = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+`;
+// todo: create buttons instead of SVG for semantic reasons
+export const StyledSVGPencil = styled(Pencil)`
+  width: 16px;
+  height: 16px;
+  fill: #8c8c8c;
+
+  &:hover {
+    fill: #333333;
+  }
+`;
+
+export const StyledSVGTrash = styled(Trash)`
+  margin-left: 0.2em;
+  width: 16px;
+  height: 16px;
+  fill: #b33636;
+  &:hover {
+    fill: darkred;
+  }
 `;

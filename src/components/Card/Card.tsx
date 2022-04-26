@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { CardContainer } from '../../styles'
+import React, { useRef, useState } from 'react'
+import { CardContainer, StyledSVGPencil, StyledSVGTrash } from '../../styles'
 import { ICardProps } from './Card.props';
 import { useAppState } from '../../state/AppStateContext';
 import { isHidden } from '../../utils/isHidden';
@@ -10,6 +10,7 @@ import { throttle } from 'throttle-debounce-ts';
 
 
 export const Card = ({ text, id, columnId, isPreview }: ICardProps): JSX.Element => {
+  const [show, setShow] = useState(false);
   const { draggedItem, dispatch } = useAppState()
   const ref = useRef<HTMLDivElement>( null )
 
@@ -42,13 +43,23 @@ export const Card = ({ text, id, columnId, isPreview }: ICardProps): JSX.Element
 
   drag(drop(ref))
 
+  const handleShowEdit = () => {
+    setShow( (prev) => !prev);
+  }
+
   return (
     <CardContainer
       isHidden={ isHidden( draggedItem, 'CARD', id, isPreview ) }
       isPreview={ isPreview }
       ref={ ref }
+      onPointerEnter={handleShowEdit}
+      onPointerLeave={handleShowEdit}
     >
       { text }
+      { show && <div>
+        <StyledSVGPencil/>
+        <StyledSVGTrash/>
+      </div> }
     </CardContainer>
   )
 }
