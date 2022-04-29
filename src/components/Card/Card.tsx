@@ -5,7 +5,7 @@ import { useAppState } from '../../state/AppStateContext';
 import { isHidden } from '../../utils/isHidden';
 import { useItemDrag } from '../../utils/useItemDrag';
 import { useDrop } from 'react-dnd';
-import { moveTask, setDraggedItem } from '../../state/actions';
+import { moveTask, removeItem, setDraggedItem } from '../../state/actions';
 import { throttle } from 'throttle-debounce-ts';
 
 
@@ -47,6 +47,12 @@ export const Card = ({ text, id, columnId, isPreview }: ICardProps): JSX.Element
     setShow( (prev) => !prev);
   }
 
+  const handleDelete = (listId: string, itemId: string) => () => {
+    console.log(`listId => ${listId}`);
+    console.log(`itemId => ${itemId}`);
+    dispatch(removeItem(listId, itemId))
+  }
+
   return (
     <CardContainer
       isHidden={ isHidden( draggedItem, 'CARD', id, isPreview ) }
@@ -58,7 +64,7 @@ export const Card = ({ text, id, columnId, isPreview }: ICardProps): JSX.Element
       { text }
       { show && <div>
         <StyledSVGPencil/>
-        <StyledSVGTrash/>
+        <StyledSVGTrash onClick={handleDelete(columnId, id)}/>
       </div> }
     </CardContainer>
   )

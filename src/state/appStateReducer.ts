@@ -1,7 +1,7 @@
 import { Action } from './actions'
 import { v4 as uuidv4 } from 'uuid';
 import { moveItem } from '../utils/moveItem';
-import { findItemIndexById } from '../utils/arrayUtils';
+import { findItemIndexById, removeItemAtIndex } from '../utils/arrayUtils';
 import { DragItem } from '../DragItem';
 
 export interface Task {
@@ -90,6 +90,12 @@ export const appStateReducer = (draft: AppState, action: Action): AppState | voi
     case 'SET_DRAGGED_ITEM': {
       draft.draggedItem = action.payload
       break
+    }
+    case 'DEL_ITEM': {
+      const indexList = findItemIndexById( draft.lists, action.payload.listId )
+      const indexItem = findItemIndexById( draft.lists[indexList].tasks, action.payload.itemId )
+      draft.lists[indexList].tasks = removeItemAtIndex(draft.lists[indexList].tasks, indexItem)
+      break;
     }
     // default: {
     //   return draft

@@ -37,6 +37,13 @@ export type Action =
     targetColumnId: string
   }
 }
+| {
+  type: 'DEL_ITEM'
+  payload: {
+    listId: string
+    itemId: string
+  }
+}
 
 
 export const addTask = (text: string, listId: string): Action => ({
@@ -77,5 +84,13 @@ export const moveTask = (
     hoveredItemId,
     sourceColumnId,
     targetColumnId,
+  },
+})
+
+export const removeItem = (listId: string, itemId: string): Action => ({
+  type: 'DEL_ITEM',
+  payload: {
+    listId,
+    itemId
   },
 })

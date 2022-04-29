@@ -15,17 +15,17 @@ const appData: AppState = {
     {
       id: '0',
       text: 'To Do',
-      tasks: [ { id: 'c0', text: 'Generate app scaffold' } ],
+      tasks: [{ id: 'c0', text: 'Generate app scaffold' }],
     },
     {
       id: '1',
       text: 'In Progress',
-      tasks: [ { id: 'c2', text: 'Learn Typescript' } ],
+      tasks: [{ id: 'c2', text: 'Learn Typescript' }],
     },
     {
       id: '2',
       text: 'Done',
-      tasks: [ { id: 'c3', text: 'Begin to use static typing' } ],
+      tasks: [{ id: 'c3', text: 'Begin to use static typing' }],
     },
   ],
   draggedItem: null,
@@ -39,40 +39,40 @@ const appData: AppState = {
 
 export function withInitialState<TProps>(
   WrappedComponent: React.ComponentType<PropsWithoutInjected<TProps> & InjectedProps>,
-){
+) {
   return (props: PropsWithoutInjected<TProps>) => {
-    const [ initialState, setInitialState ] = useState<AppState>( {
+    const [initialState, setInitialState] = useState<AppState>({
       lists: [],
       draggedItem: null,
-    } )
+    })
 
-    const [ isLoading, setIsLoading ] = useState( true )
-    const [ error, setError ] = useState<Error | undefined>()
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<Error | undefined>()
 
-    useEffect( () => {
+    useEffect(() => {
       const fetchInitialState = async () => {
         try {
           const data = await load()
-          setInitialState( data )
+          setInitialState(data)
         } catch (e) {
-          setInitialState( appData )
-          /*if ( e instanceof Error ) {
-            setError( e )
-          }*/
+          setInitialState(appData)
+          if (e instanceof Error) {
+            setError(e)
+          }
         }
-        setIsLoading( false )
+        setIsLoading(false)
       }
       fetchInitialState()
-    }, [] )
+    }, [])
 
-    if ( isLoading ) {
-      return <FlexContainer><Spinner/></FlexContainer>
+    if (isLoading) {
+      return <FlexContainer><Spinner /></FlexContainer>
     }
 
-    if ( error ) {
-      return <div>{ error.message }</div>
+    if (error) {
+      return <div>{error.message}</div>
     }
 
-    return <WrappedComponent { ...props } initialState={ initialState }/>
+    return <WrappedComponent {...props} initialState={initialState} />
   }
 }
